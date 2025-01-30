@@ -1,32 +1,23 @@
-<!--index.html-->
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta name="viewport" 
-          content="width=device-width, 
-                   initial-scale=1.0" />
-    <link rel="stylesheet" 
-          href="style.css" />
-    <script src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Checker</title>
+    <link rel="icon" href="./images/Website icon.png" type="icon/x-image">
 </head>
-
 <body>
-    <div class="group">
-      
-        <h1>Password Strength Checker</h1>
-        <label for="">Password</label>
-        <input type="text" 
-               id="password"
-               placeholder="Type your password here" />
-        <label for="">
-              Strength of password
-          </label>
-        <div class="power-container">
-            <div id="power-point"></div>
+    <div class="container">
+        <div class="input-box">
+            <input type="password" placeholder="password" id="password">
+            <button type="submit"><img src="./images/arrow.png" alt=""></button>
+            <p id="message">Password is <span id="strength"></span></p>
         </div>
+        
     </div>
-</body>
+    
 
+    <!--JS File-->
+    <script src="./script.js"></script>
+</body>
 </html>
