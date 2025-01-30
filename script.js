@@ -1,38 +1,70 @@
-var pass = document.getElementById("password");
-var msg = document.getElementById("message");
-var strength = document.getElementById("strength");
-var arrow = document.querySelector("button[type='submit']");
-
-arrow.addEventListener("click", function() {
-    if (pass.value.length === 0) {
-        alert("Tip💡: Add UPPERCASE, lowercase, symbols, letters for more secure passwords");
-    } else if (pass.value.length < 4) {
-        alert("Password seems to be weak, Try more secure passwords.");
-    } else if (pass.value.length >= 6 && pass.value.length < 12) {
-        alert("Password seems to be medium, update it to be more secure.");
-    } else if (pass.value.length >= 12) {
-        alert("Password updated");
+function calculatePasswordStrength(password) {
+    var passwordStrength = 'weak';
+    
+    if (password.match(/[a-z]+/) && password.match(/[A-Z]+/) && password.match(/[0-9]+/) && password.match(/[$-/:-?{-~!"^_`\[\]]/)) {
+      if (password.length >= 12) {
+        passwordStrength = 'strong';
+      } else if (password.length >= 8) {
+        passwordStrength = 'medium';
+      }
     }
-});
-
-pass.addEventListener("input", () => {
-    if (pass.value.length > 0) {
-        msg.style.display = "block";
-    } else {
-        msg.style.display = "none";
-    }
-
-    if (pass.value.length < 4) {
-        strength.innerHTML = "Weak";
-        pass.style.borderColor="#ff5925";
-        msg.style.color="#ff5925";
-    } else if (pass.value.length >= 6 && pass.value.length < 12) {
-        strength.innerHTML = "Medium";
-        pass.style.borderColor="yellow";
-        msg.style.color="yellow";
-    } else if (pass.value.length >= 12) {
-        strength.innerHTML = "Strong";
-        pass.style.borderColor="#26d730";
-        msg.style.color="#26d730";
-    }
-});
+    
+    return passwordStrength;
+  }
+  
+  $(document).ready(function() {
+    $('#password').on('input', function() {
+      var password = $(this).val();
+      $('#ipass').text(password);
+      var passwordStrength = calculatePasswordStrength(password);
+      var progressBar = $('#password-strength .progress-bar');
+      var conditionsMet = [false, false, false, false, false, false];
+      
+      if (password.match(/[a-z]+/)) {
+        conditionsMet[0] = true;
+      }
+      
+      if (password.match(/[A-Z]+/)) {
+        conditionsMet[1] = true;
+      }
+      
+      if (password.match(/[0-9]+/)) {
+        conditionsMet[2] = true;
+      }
+      
+      if (password.match(/[$-/:-?{-~!"^_`\[\]]/)) {
+        conditionsMet[3] = true;
+      }
+      
+      if (password.length >= 8) {
+        conditionsMet[4] = true;
+      }
+      
+      if (password.length >= 12) {
+        conditionsMet[5] = true;
+      }
+      
+      $('#password-conditions .password-condition').each(function(index) {
+        if (conditionsMet[index]) {
+          $(this).addClass('met');
+        } else {
+          $(this).removeClass('met');
+        }
+      });
+      
+      switch(passwordStrength) {
+        case 'weak':
+          progressBar.removeClass('bg-warning bg-success').addClass('bg-danger').css('width', '25%').text('Weak');
+          break;
+        case 'medium':
+          progressBar.removeClass('bg-danger bg-success').addClass('bg-warning').css('width', '50%').text('Medium');
+          break;
+        case 'strong':
+          progressBar.removeClass('bg-danger bg-warning').addClass('bg-success').css('width', '100%').text('Strong');
+          break;
+        default:
+          progressBar.removeClass('bg-warning bg-success').addClass('bg-danger').css('width', '25%').text('');
+      }
+    });
+  });
+  
