@@ -1,24 +1,38 @@
-// script.js
+var pass = document.getElementById("password");
+var msg = document.getElementById("message");
+var strength = document.getElementById("strength");
+var arrow = document.querySelector("button[type='submit']");
 
-let password = document.getElementById("password");
-let power = document.getElementById("power-point");
-password.oninput = function () {
-    let point = 0;
-    let value = password.value;
-    let widthPower = 
-        ["1%", "25%", "50%", "75%", "100%"];
-    let colorPower = 
-        ["#D73F40", "#DC6551", "#F2B84F", "#BDE952", "#3ba62f"];
-
-    if (value.length >= 6) {
-        let arrayTest = 
-            [/[0-9]/, /[a-z]/, /[A-Z]/, /[^0-9a-zA-Z]/];
-        arrayTest.forEach((item) => {
-            if (item.test(value)) {
-                point += 1;
-            }
-        });
+arrow.addEventListener("click", function() {
+    if (pass.value.length === 0) {
+        alert("Tip💡: Add UPPERCASE, lowercase, symbols, letters for more secure passwords");
+    } else if (pass.value.length < 4) {
+        alert("🙅🏻‍♀️Password seems to be weak, Try more secure passwords.");
+    } else if (pass.value.length >= 6 && pass.value.length < 12) {
+        alert("📈Password seems to be medium, update it to be more secure.");
+    } else if (pass.value.length >= 12) {
+        alert("✅Password updated");
     }
-    power.style.width = widthPower[point];
-    power.style.backgroundColor = colorPower[point];
-};
+});
+
+pass.addEventListener("input", () => {
+    if (pass.value.length > 0) {
+        msg.style.display = "block";
+    } else {
+        msg.style.display = "none";
+    }
+
+    if (pass.value.length < 4) {
+        strength.innerHTML = "Weak";
+        pass.style.borderColor="#ff5925";
+        msg.style.color="#ff5925";
+    } else if (pass.value.length >= 6 && pass.value.length < 12) {
+        strength.innerHTML = "Medium";
+        pass.style.borderColor="yellow";
+        msg.style.color="yellow";
+    } else if (pass.value.length >= 12) {
+        strength.innerHTML = "Strong";
+        pass.style.borderColor="#26d730";
+        msg.style.color="#26d730";
+    }
+});
