@@ -7,11 +7,11 @@ arrow.addEventListener("click", function() {
     if (pass.value.length === 0) {
         alert("Tip💡: Add UPPERCASE, lowercase, symbols, letters for more secure passwords");
     } else if (pass.value.length < 4) {
-        alert("🙅🏻‍♀️Password seems to be weak, Try more secure passwords.");
+        alert("Password seems to be weak, Try more secure passwords.");
     } else if (pass.value.length >= 6 && pass.value.length < 12) {
-        alert("📈Password seems to be medium, update it to be more secure.");
+        alert("Password seems to be medium, update it to be more secure.");
     } else if (pass.value.length >= 12) {
-        alert("✅Password updated");
+        alert("Password updated");
     }
 });
 
